@@ -18,3 +18,27 @@ function getComputerChoice() {
     let choices = Array('Rock', 'Paper', 'Scissors');
     return choices[Math.floor(Math.random()*choices.length)];
 }
+
+function playRound(playerSelection, computerSelection) {
+    // Pseudocode
+    // GETS the playerSelection and GETS the computerSelection
+    // COMPARES playerSelection and computerSelection
+    // IF playerSelection == Rock && computerSelection == Paper:
+    //// RETURN 'You Lose! Paper beats Rock"
+    // IF playerSelection == Rock && computerSelection == Rock:
+    //// RETURN 'Tie! Rock cannot beat Rock"
+    // IF playerSelection == Rock && computerSelection == Scissors:
+    //// RETURN 'You Win! Rock beats Scissors"
+    // ...and so on
+    if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'PAPER') {
+        return 'You Lose! Paper beats Rock'
+    } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'ROCK') {
+        return 'Tie! Rock cannot beat Rock'
+    } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'SCISSORS') {
+        return 'You Win! Rock beats Scissors'
+    }
+}
+
+const playerSelection = 'Rock';
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection))
