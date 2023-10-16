@@ -8,7 +8,7 @@
 // 5) Steps to get Output:
 ///// -- First, get Player's Input
 ///// -- Second, get CPU's Input
-///// -- Determine which of the two wins then output the results (from POV of player)
+///// -- Determine which of the two wins then output the statuss (from POV of player)
 
 
 function getComputerChoice() {
@@ -30,47 +30,55 @@ function playRound(playerSelection, computerSelection) {
     // IF playerSelection == Rock && computerSelection == Scissors:
     //// RETURN 'You Win! Rock beats Scissors"
     // ...and so on
-    let result = '';
+    let status = '';
 
     // ROCK vs ...
     if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'PAPER') {
-        result = 'You Lose! Paper beats Rock';
+        status = 'You Lose! Paper beats Rock';
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'ROCK') {
-        result = 'Tie! Rock cannot beat Rock';
+        status = 'Tie! Rock cannot beat Rock';
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'SCISSORS') {
-        result = 'You Win! Rock beats Scissors';
+        status = 'You Win! Rock beats Scissors';
     // PAPER vs ...
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'ROCK') {
-        result = 'You Win! Paper beats Rock';
+        status = 'You Win! Paper beats Rock';
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'PAPER') {
-        result = 'Tie! Paper cannot beat Paper'
+        status = 'Tie! Paper cannot beat Paper'
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'SCISSORS') {
-        result = 'You Lose! Scissors beat Paper'
+        status = 'You Lose! Scissors beat Paper'
     // SCISSORS vs ...
     } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'PAPER') {
-        result = 'You Win! Scissors beat Paper'
+        status = 'You Win! Scissors beat Paper'
     } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'ROCK') {
-        result = 'You Lose! Rock beats Scissors'
+        status = 'You Lose! Rock beats Scissors'
     } else {
-        result = 'Tie! Scissors cannot beat Scissors'
+        status = 'Tie! Scissors cannot beat Scissors'
     }
-    return result;
+    console.log(status)
 }
 
-// function game() {
-//     // Pseudocode
-//     // STARTS a 5 round game between PLAYER and CPU
-//     // IF player wins 1 round, PLAYERSCORE += 1
-//     // ELSE CPUSCORE += 1
-//     // IF PLAYERSCORE > CPUSCORE
-//     //// PLAYER WINS, CPU LOSES
-//     // ELSE
-//     //// CPU WINS, PLAYER LOSES
-//     playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
-// }
+function game() {
+    // Trying to get a score counter going by retrieving the result from playRound, just don't know how to do so
 
-const playerSelection = 'Scissors';
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection))
-console.log(`Player selection: ${playerSelection}`)
-console.log(`CPU selection: ${computerSelection}`)
+    // Pseudocode
+    // STARTS a 5 round game between PLAYER and CPU
+    // IF player wins 1 round, PLAYERSCORE += 1
+    // ELSE CPUSCORE += 1
+    // IF PLAYERSCORE > CPUSCORE
+    //// PLAYER WINS, CPU LOSES
+    // ELSE
+    //// CPU WINS, PLAYER LOSES
+
+    // Play 5 rounds (should look to loop this eventually)
+    playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+    playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+    playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+    playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+    playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+}
+
+// const playerSelection = 'Scissors';
+// const computerSelection = getComputerChoice();
+// console.log(playRound(playerSelection, computerSelection))
+// console.log(`Player selection: ${playerSelection}`)
+// console.log(`CPU selection: ${computerSelection}`)
