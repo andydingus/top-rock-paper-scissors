@@ -30,15 +30,47 @@ function playRound(playerSelection, computerSelection) {
     // IF playerSelection == Rock && computerSelection == Scissors:
     //// RETURN 'You Win! Rock beats Scissors"
     // ...and so on
+    let result = '';
+
+    // ROCK vs ...
     if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'PAPER') {
-        return 'You Lose! Paper beats Rock'
+        result = 'You Lose! Paper beats Rock';
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'ROCK') {
-        return 'Tie! Rock cannot beat Rock'
+        result = 'Tie! Rock cannot beat Rock';
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'SCISSORS') {
-        return 'You Win! Rock beats Scissors'
+        result = 'You Win! Rock beats Scissors';
+    // PAPER vs ...
+    } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'ROCK') {
+        result = 'You Win! Paper beats Rock';
+    } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'PAPER') {
+        result = 'Tie! Paper cannot beat Paper'
+    } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'SCISSORS') {
+        result = 'You Lose! Scissors beat Paper'
+    // SCISSORS vs ...
+    } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'PAPER') {
+        result = 'You Win! Scissors beat Paper'
+    } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'ROCK') {
+        result = 'You Lose! Rock beats Scissors'
+    } else {
+        result = 'Tie! Scissors cannot beat Scissors'
     }
+    return result;
 }
 
-const playerSelection = 'Rock';
+// function game() {
+//     // Pseudocode
+//     // STARTS a 5 round game between PLAYER and CPU
+//     // IF player wins 1 round, PLAYERSCORE += 1
+//     // ELSE CPUSCORE += 1
+//     // IF PLAYERSCORE > CPUSCORE
+//     //// PLAYER WINS, CPU LOSES
+//     // ELSE
+//     //// CPU WINS, PLAYER LOSES
+//     playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+// }
+
+const playerSelection = 'Scissors';
 const computerSelection = getComputerChoice();
 console.log(playRound(playerSelection, computerSelection))
+console.log(`Player selection: ${playerSelection}`)
+console.log(`CPU selection: ${computerSelection}`)
