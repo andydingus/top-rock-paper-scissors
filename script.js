@@ -90,20 +90,34 @@ function game() {
     // Variable to store result of playRound
     let roundResult = 0;
 
-    // Play 5 rounds (using for loop)
-    for (i = 1; i <= 5; i++) {
-        roundResult = playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
-        if (roundResult === 0) {
-            playerScore += 1;
-            console.log(`Round ${i} Winner: Player`)
-        } else if(roundResult === 1) {
-            cpuScore += 1;
-            console.log(`Round ${i} Winner: CPU`)
-        } else {
-            tieScore += 1;
-            console.log(`Round ${i} is a Tie`)
-        }
-    }
+    // // Play 5 rounds (using for loop)
+    // for (i = 1; i <= 5; i++) {
+    //     roundResult = playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
+    //     if (roundResult === 0) {
+    //         playerScore += 1;
+    //         console.log(`Round ${i} Winner: Player`)
+    //     } else if(roundResult === 1) {
+    //         cpuScore += 1;
+    //         console.log(`Round ${i} Winner: CPU`)
+    //     } else {
+    //         tieScore += 1;
+    //         console.log(`Round ${i} is a Tie`)
+    //     }
+    // }
+
+    // Elements to be used in UI
+    const btnRock = document.getElementById('btnRock');
+    const btnPaper = document.getElementById('btnPaper');
+    const btnScissors = document.getElementById('btnScissors');
+    const results = document.getElementById('results');
+
+    // Calls playRound(), taking into account whose turn it is
+    btnRock.addEventListener('click', playRound());
+    btnPaper.addEventListener('click',playRound());
+    btnScissors.addEventListener('click',playRound());
+
+
+
     console.log(`Player's score: ${playerScore}`);
     console.log(`CPU's score: ${cpuScore}`);
     console.log(`Amount of ties: ${tieScore}`);
