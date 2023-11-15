@@ -16,7 +16,8 @@ function getComputerChoice() {
     // When called, RANDOMLY return
     // Rock, Paper, or Scissors
     let choices = Array('Rock', 'Paper', 'Scissors');
-    return choices[Math.floor(Math.random()*choices.length)];
+    let randomChoice = choices[Math.floor(Math.random()*choices.length)];
+    return randomChoice.toString();
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -34,7 +35,7 @@ function playRound(playerSelection, computerSelection) {
     let roundWinner = 0; // Player win = 0, CPU win = 1, Tie = 2
 
     // ROCK vs ...
-    if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'PAPER') {
+    if (playerSelection == 'ROCK' && computerSelection == 'PAPER') {
         status = 'You Lose! Paper beats Rock';
         roundWinner = 1;
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'ROCK') {
@@ -86,24 +87,9 @@ function game() {
     let playerScore = 0;
     let cpuScore = 0;
     let tieScore = 0;
+    let roundResult = undefined;
 
     // Variable to store result of playRound
-    let roundResult = 0;
-
-    // // Play 5 rounds (using for loop)
-    // for (i = 1; i <= 5; i++) {
-    //     roundResult = playRound(prompt('Rock, Paper, or Scissors?!', 'Decide!'), getComputerChoice())
-    //     if (roundResult === 0) {
-    //         playerScore += 1;
-    //         console.log(`Round ${i} Winner: Player`)
-    //     } else if(roundResult === 1) {
-    //         cpuScore += 1;
-    //         console.log(`Round ${i} Winner: CPU`)
-    //     } else {
-    //         tieScore += 1;
-    //         console.log(`Round ${i} is a Tie`)
-    //     }
-    // }
 
     // Elements to be used in UI
     const btnRock = document.getElementById('btnRock');
@@ -112,11 +98,29 @@ function game() {
     const results = document.getElementById('results');
 
     // Calls playRound(), taking into account whose turn it is
-    btnRock.addEventListener('click', playRound());
-    btnPaper.addEventListener('click',playRound());
-    btnScissors.addEventListener('click',playRound());
+    btnRock.addEventListener('mousedown', () => {
+        playRound('Rock', getComputerChoice());
+    });
+    btnPaper.addEventListener('mousedown', () => {
+        playRound('Paper', getComputerChoice());
+    });
+    btnScissors.addEventListener('mousedown', () => {
+        playRound('Scissors', getComputerChoice());
+    });
 
-
+    // Play 5 rounds (using for loop)
+    if (roundResult === 0) {
+        playerScore += 1;
+        console.log(`Winner: Player`)
+    } else if(roundResult === 1) {
+        cpuScore += 1;
+        console.log(`Winner: CPU`)
+    } else if (roundResult === undefined) {
+        console.log('Game has loaded, begin play!')
+    } else {
+        tieScore += 1;
+        console.log(`Round is a Tie`)
+    }
 
     console.log(`Player's score: ${playerScore}`);
     console.log(`CPU's score: ${cpuScore}`);
