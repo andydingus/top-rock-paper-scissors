@@ -10,6 +10,17 @@
 ///// -- Second, get CPU's Input
 ///// -- Determine which of the two wins then output the statuss (from POV of player)
 
+// DOM selectors
+// Elements to be used in UI
+const btnRock = document.getElementById('btnRock');
+const btnPaper = document.getElementById('btnPaper');
+const btnScissors = document.getElementById('btnScissors');
+const btnRestart = document.getElementById('btnRestart');
+const results = document.getElementById('results');
+
+// Allows for linebreaks when setting textContent
+results.setAttribute('style', 'white-space: pre;');
+
 
 function getComputerChoice() {
     // Pseudocode
@@ -19,6 +30,12 @@ function getComputerChoice() {
     let randomChoice = choices[Math.floor(Math.random()*choices.length)];
     return randomChoice.toString();
 }
+
+// Score variables
+let playerScore = 0;
+let cpuScore = 0;
+let tieScore = 0;
+let roundLog = '';
 
 function playRound(playerSelection, computerSelection) {
     // Pseudocode
@@ -31,44 +48,72 @@ function playRound(playerSelection, computerSelection) {
     // IF playerSelection == Rock && computerSelection == Scissors:
     //// RETURN 'You Win! Rock beats Scissors"
     // ...and so on
-    let status = '';
-    let roundWinner = 0; // Player win = 0, CPU win = 1, Tie = 2
-
     // ROCK vs ...
     if (playerSelection == 'ROCK' && computerSelection == 'PAPER') {
-        status = 'You Lose! Paper beats Rock';
-        roundWinner = 1;
+        roundLog = 'You Lose! Paper beats Rock';
+        cpuScore += 1;
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'ROCK') {
-        status = 'Tie! Rock cannot beat Rock';
-        roundWinner = 2;
+        roundLog = 'Tie! Rock cannot beat Rock';
+        tieScore += 1;
     } else if (playerSelection.toUpperCase() == 'ROCK' && computerSelection.toUpperCase() == 'SCISSORS') {
-        status = 'You Win! Rock beats Scissors';
-        roundWinner = 0;
+        roundLog = 'You Win! Rock beats Scissors';
+        playerScore += 1;
     // PAPER vs ...
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'ROCK') {
-        status = 'You Win! Paper beats Rock';
-        roundWinner = 0;
+        roundLog = 'You Win! Paper beats Rock';
+        playerScore += 1;
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'PAPER') {
-        status = 'Tie! Paper cannot beat Paper'
-        roundWinner = 2;
+        roundLog = 'Tie! Paper cannot beat Paper'
+        tieScore += 1;
     } else if (playerSelection.toUpperCase() == 'PAPER' && computerSelection.toUpperCase() == 'SCISSORS') {
-        status = 'You Lose! Scissors beat Paper'
-        roundWinner = 1;
+        roundLog = 'You Lose! Scissors beat Paper'
+        cpuScore += 1;
     // SCISSORS vs ...
     } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'PAPER') {
-        status = 'You Win! Scissors beat Paper'
-        roundWinner = 0;
+        roundLog = 'You Win! Scissors beat Paper'
+        playerScore += 1;
     } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'ROCK') {
-        status = 'You Lose! Rock beats Scissors'
-        roundWinner = 1;
+        roundLog = 'You Lose! Rock beats Scissors'
+        cpuScore += 1;
+    } else if (playerSelection.toUpperCase() == 'SCISSORS' && computerSelection.toUpperCase() == 'SCISSORS') {
+        roundLog = 'Tie! Scissors cannot beat Scissors'
+        tieScore += 1;
+    }   
+
+    if (playerScore === 5 && cpuScore !== 5) {
+        results.textContent = `The winner is the player!\r\nFinal score: ${playerScore}-${cpuScore}`;
+        btnRock.disabled = true;
+        btnPaper.disabled = true;
+        btnScissors.disabled = true;
+        btnRestart.disabled = false;
+    } else if (cpuScore === 5 && playerScore !== 5) {
+        results.textContent = `The winner is the CPU!\r\nFinal score: ${playerScore}-${cpuScore}`;
+        btnRock.disabled = true;
+        btnPaper.disabled = true;
+        btnScissors.disabled = true;
+        btnRestart.disabled = false;
     } else {
-        status = 'Tie! Scissors cannot beat Scissors'
-        roundWinner = 2;
+        results.textContent = `${roundLog}!\r\nCurrent score (Player-CPU): ${playerScore}-${cpuScore}`;
     }
-    console.log(status)
-    console.log(roundWinner)
-    return roundWinner;
     
+    console.log(roundLog)
+    console.log(`Player's score: ${playerScore}`);
+    console.log(`CPU's score: ${cpuScore}`);
+    console.log(`Amount of ties: ${tieScore}`);    
+}
+
+function restartGame(msg) {
+    // Everything back to initial values
+    playerScore = 0;
+    cpuScore = 0;
+    tieScore = 0;
+    roundLog = '';
+    results.textContent = `${msg}`;
+
+    btnRock.disabled = false;
+    btnPaper.disabled = false;
+    btnScissors.disabled = false;
+    btnRestart.disabled = true;
 }
 
 function game() {
@@ -82,22 +127,10 @@ function game() {
     //// PLAYER WINS, CPU LOSES
     // ELSE
     //// CPU WINS, PLAYER LOSES
-
-    // Score variables
-    let playerScore = 0;
-    let cpuScore = 0;
-    let tieScore = 0;
-    let roundResult = undefined;
-
-    // Variable to store result of playRound
-
-    // Elements to be used in UI
-    const btnRock = document.getElementById('btnRock');
-    const btnPaper = document.getElementById('btnPaper');
-    const btnScissors = document.getElementById('btnScissors');
-    const results = document.getElementById('results');
-
     // Calls playRound(), taking into account whose turn it is
+
+    // Remains disabled until a winner is decided
+    btnRestart.disabled = true
     btnRock.addEventListener('mousedown', () => {
         playRound('Rock', getComputerChoice());
     });
@@ -107,24 +140,9 @@ function game() {
     btnScissors.addEventListener('mousedown', () => {
         playRound('Scissors', getComputerChoice());
     });
-
-    // Play 5 rounds (using for loop)
-    if (roundResult === 0) {
-        playerScore += 1;
-        console.log(`Winner: Player`)
-    } else if(roundResult === 1) {
-        cpuScore += 1;
-        console.log(`Winner: CPU`)
-    } else if (roundResult === undefined) {
-        console.log('Game has loaded, begin play!')
-    } else {
-        tieScore += 1;
-        console.log(`Round is a Tie`)
-    }
-
-    console.log(`Player's score: ${playerScore}`);
-    console.log(`CPU's score: ${cpuScore}`);
-    console.log(`Amount of ties: ${tieScore}`);
+    btnRestart.addEventListener('mousedown', () => {
+        restartGame('New game, let\'s play again!');
+    });
 }
 
 game();
